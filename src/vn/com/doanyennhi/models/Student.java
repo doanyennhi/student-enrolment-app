@@ -1,4 +1,4 @@
-package cms.models;
+package vn.com.doanyennhi.models;
 
 public class Student {
   private String sID;

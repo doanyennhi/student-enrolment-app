@@ -1,6 +1,6 @@
-package cms.models.interfaces;
+package vn.com.doanyennhi.models.interfaces;
 
-import cms.models.StudentEnrolment;
+import vn.com.doanyennhi.models.StudentEnrolment;
 
 public interface StudentEnrolmentManager {
   boolean add(StudentEnrolment studentEnrolment);

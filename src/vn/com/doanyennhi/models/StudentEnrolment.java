@@ -1,4 +1,4 @@
-package cms.models;
+package vn.com.doanyennhi.models;
 
 public class StudentEnrolment {
   private Student student;
