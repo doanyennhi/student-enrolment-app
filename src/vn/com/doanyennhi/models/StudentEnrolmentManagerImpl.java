@@ -4,16 +4,7 @@ public class StudentEnrolmentManagerImpl {
 
   private StudentEnrolment[] studentEnrolments;
 
-  public void displayCoursesOfStudent(String sID) {
-
+  void setStudentEnrolments(StudentEnrolment[] studentEnrolments) {
+    this.studentEnrolments = studentEnrolments;
   }
-
-  public void displayStudentsInCourse(String cID) {
-
-  }
-
-  public void displayAllCourses(String semester) {
-
-  }
-
 }

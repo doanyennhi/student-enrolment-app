@@ -3,13 +3,13 @@ package vn.com.doanyennhi.models.interfaces;
 import vn.com.doanyennhi.models.StudentEnrolment;
 
 public interface StudentEnrolmentManager {
-  boolean add(StudentEnrolment studentEnrolment);
+  boolean add(String sId, String cId, String semester);
 
-  boolean update(StudentEnrolment studentEnrolment);
+  boolean update(String sId, String semester);
 
-  boolean delete(StudentEnrolment studentEnrolment);
+  boolean delete(String sId, String cId, String semester);
 
-  StudentEnrolment getOne();
+  StudentEnrolment getOne(String sId, String cId, String semester);
 
   StudentEnrolment[] getAll();
 
