@@ -17,7 +17,7 @@ public class Csv {
    * @return list of arrays containing the data of each line in the file
    */
   public static List<String[]> readCsv(String path) {
-    List<String[]> data = new ArrayList<>();
+    List<String[]> data = new ArrayList<String[]>();
 
     try {
       Scanner sc = new Scanner(new File(path));

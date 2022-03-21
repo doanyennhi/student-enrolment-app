@@ -1,10 +1,22 @@
 package vn.com.doanyennhi.models;
 
+import java.util.ArrayList;
+
 public class StudentEnrolmentManagerImpl {
 
-  private StudentEnrolment[] studentEnrolments;
+  private ArrayList<StudentEnrolment> studentEnrolments;
 
-  void setStudentEnrolments(StudentEnrolment[] studentEnrolments) {
+  public StudentEnrolmentManagerImpl() {
+    this.studentEnrolments = new ArrayList<StudentEnrolment>();
+  }
+
+  public ArrayList<StudentEnrolment> getStudentEnrolments() {
+    return studentEnrolments;
+  }
+
+  public void setStudentEnrolments(ArrayList<StudentEnrolment> studentEnrolments) {
     this.studentEnrolments = studentEnrolments;
   }
+
+
 }
