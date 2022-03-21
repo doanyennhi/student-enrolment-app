@@ -11,11 +11,23 @@ public class StudentEnrolment {
     this.semester = semester;
   }
 
+  public Student getStudent() {
+    return student;
+  }
+
+  public Course getCourse() {
+    return course;
+  }
+
+  public String getSemester() {
+    return semester;
+  }
+
   @Override
   public String toString() {
     return "Enrolment \n " +
-        "student ID: " + student.getsId() +
-        ", course ID: " + course.getcId() +
-        ", semester: " + semester + "\n";
+        "student ID: " + this.student.getsId() +
+        ", course ID: " + this.course.getcId() +
+        ", semester: " + this.semester + "\n";
   }
 }

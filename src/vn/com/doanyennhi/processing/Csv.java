@@ -12,23 +12,25 @@ import java.util.Scanner;
 public class Csv {
 
   /**
-   * method to read data from CSV file provided
+   * method to read data from provided CSV file
    * @param path of CSV file we want to read
-   * @return list of arrays containing the data of each line in the file
+   * @return list of string arrays containing the data of each line in the file
    */
   public static List<String[]> readCsv(String path) {
-    List<String[]> data = new ArrayList<String[]>();
+    List<String[]> dataList = new ArrayList<String[]>();
 
     try {
       Scanner sc = new Scanner(new File(path));
 
       while (sc.hasNextLine()) {
-        data.add(sc.nextLine().split(","));
+        // split string of data into array, add the array of data to dataList
+        // each string array in dataList now contains data of each line in csv file
+        dataList.add(sc.nextLine().split(","));
       }
     } catch (IOException e) {
       System.out.println(e.getMessage());
     }
-    return data;
+    return dataList;
   }
 
   public static void writeCsv() {
