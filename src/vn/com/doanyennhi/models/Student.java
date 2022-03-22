@@ -34,6 +34,7 @@ public class Student {
       return false;
     }
     Student student = (Student) o;
+    // two Students are the same if they have same ID
     return Objects.equals(sId, student.sId);
   }
 

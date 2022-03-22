@@ -26,8 +26,8 @@ public class StudentEnrolment {
   @Override
   public String toString() {
     return "Enrolment \n " +
-        "student ID: " + this.student.getsId() +
-        ", course ID: " + this.course.getcId() +
+        "student ID: " + this.student.toString() +
+        ", course ID: " + this.course.toString() +
         ", semester: " + this.semester + "\n";
   }
 }

@@ -18,6 +18,15 @@ public class Course {
   }
 
   @Override
+  public String toString() {
+    return "Course{" +
+        "cId='" + cId + '\'' +
+        ", name='" + name + '\'' +
+        ", credits=" + credits +
+        '}';
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -26,6 +35,7 @@ public class Course {
       return false;
     }
     Course course = (Course) o;
+    // two Courses are the same if they have same ID
     return Objects.equals(cId, course.cId);
   }
 
