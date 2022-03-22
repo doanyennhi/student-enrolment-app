@@ -17,9 +17,9 @@ public class EnrolmentDataProcessor {
    * @param path of CSV file we want to read
    * @return list of all enrolments
    */
-  public static ArrayList<StudentEnrolment> processEnrolmentData(String path) {
+  public static List<StudentEnrolment> processEnrolmentData(String path) {
     List<String[]> enrolmentsData = Csv.readCsv(path);
-    ArrayList<StudentEnrolment> studentEnrolmentList = new ArrayList<StudentEnrolment>();
+    List<StudentEnrolment> studentEnrolmentList = new ArrayList<StudentEnrolment>();
 
     for (String[] enrolment: enrolmentsData) {
       // Create Student, Course, StudentEnrolment objects from data in the data array
