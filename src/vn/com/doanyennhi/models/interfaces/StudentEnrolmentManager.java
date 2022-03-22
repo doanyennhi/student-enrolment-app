@@ -1,5 +1,6 @@
 package vn.com.doanyennhi.models.interfaces;
 
+import java.util.List;
 import vn.com.doanyennhi.models.StudentEnrolment;
 
 public interface StudentEnrolmentManager {
@@ -11,6 +12,6 @@ public interface StudentEnrolmentManager {
 
   StudentEnrolment getOne(String sId, String cId, String semester);
 
-  StudentEnrolment[] getAll();
+  List<StudentEnrolment> getAll();
 
 }
