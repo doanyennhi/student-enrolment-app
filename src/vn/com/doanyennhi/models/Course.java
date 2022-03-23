@@ -19,11 +19,11 @@ public class Course {
 
   @Override
   public String toString() {
-    return "Course{" +
+    return "Course: " +
         "cId='" + cId + '\'' +
         ", name='" + name + '\'' +
         ", credits=" + credits +
-        "}\n";
+        "\n";
   }
 
   @Override

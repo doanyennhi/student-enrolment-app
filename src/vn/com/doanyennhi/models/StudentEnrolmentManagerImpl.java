@@ -89,9 +89,9 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     studentEnrolments.add(new StudentEnrolment(student, course, semester));
     System.out.println("Enrol successfully!");
     // for testing
-    for (StudentEnrolment studentEnrolment: studentEnrolments) {
-      System.out.println(studentEnrolment);
-    }
+//    for (StudentEnrolment studentEnrolment: studentEnrolments) {
+//      System.out.println(studentEnrolment);
+//    }
     return true;
   }
 

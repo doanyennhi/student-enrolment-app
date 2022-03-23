@@ -19,10 +19,10 @@ public class Student {
 
   @Override
   public String toString() {
-    return "Student{" +
+    return "Student: " +
         "sId='" + sId + "'" +
         ", name='" + name + "'" +
-        ", birthdate='" + birthdate + "'}\n";
+        ", birthdate='" + birthdate + "'\n";
   }
 
   @Override
