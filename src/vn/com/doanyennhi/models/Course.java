@@ -23,7 +23,7 @@ public class Course {
         "cId='" + cId + '\'' +
         ", name='" + name + '\'' +
         ", credits=" + credits +
-        '}';
+        "}\n";
   }
 
   @Override

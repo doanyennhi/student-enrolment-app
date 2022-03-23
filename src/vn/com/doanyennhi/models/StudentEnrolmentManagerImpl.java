@@ -17,6 +17,12 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     this.studentEnrolments = EnrolmentDataProcessor.processEnrolmentData(path);
   }
 
+
+  /**
+   * Find and retrieve a student from their ID
+   * @param studentId id of student we want to get
+   * @return the student if they exist in the data, null otherwise
+   */
   public Student findStudent(String studentId) {
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getStudent().getsId().equals(studentId)) {
@@ -27,6 +33,12 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     return null;
   }
 
+
+  /**
+   * Find and retrieve a course from its ID
+   * @param courseId id of course we want to get
+   * @return the course if it exists in the data, null otherwise
+   */
   public Course findCourse(String courseId) {
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getCourse().getcId().equals(courseId)) {
@@ -37,27 +49,33 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     return null;
   }
 
-  public String findSemester(String semester) {
+
+  /**
+   * Check if the semester provided exists in the database
+   * @param semester we want to check
+   * @return true if it is in database, false otherwise
+   */
+  public boolean hasSemester(String semester) {
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getSemester().equals(semester)) {
-        return enrolment.getSemester();
+        return true;
       }
     }
     System.out.println("This semester does not exist in the database.");
-    return null;
+    return false;
   }
 
 
   /**
    * Method to enrol a student for a course in a semester
-   * @param sId student ID
-   * @param cId course ID
+   * @param sId student ID of student we want to enrol
+   * @param cId course ID of course to be enrolled in
    * @param semester specific semester
-   * @return true if enrolment is successful, false otherwise
+   * @return true if enrolment can be added to the list, false otherwise
    */
   @Override
   public boolean add(String sId, String cId, String semester) {
-    // check if student has already enrolled in the provided course and semester
+    // prevent enrolment if student has already enrolled in the provided course and semester
     StudentEnrolment enrolment = getOne(sId, cId, semester);
     if (enrolment != null) {
       System.out.printf("Student %s already enrolled in course %s for semester %s\n",
@@ -65,19 +83,16 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
       return false;
     }
 
-    // TODO: rewrite logic with findStudent and findCourse
+    // find student and course in list to enrol them
+    Student student = findStudent(sId);
+    Course course = findCourse(cId);
+    studentEnrolments.add(new StudentEnrolment(student, course, semester));
+    System.out.println("Enrol successfully!");
+    // for testing
     for (StudentEnrolment studentEnrolment: studentEnrolments) {
-      if (studentEnrolment.getStudent().getsId().equals(sId)
-          && studentEnrolment.getCourse().getcId().equals(cId))
-      {
-        Student student = studentEnrolment.getStudent();
-        Course course = studentEnrolment.getCourse();
-        studentEnrolments.add(new StudentEnrolment(student, course, semester));
-        System.out.println("Enrol successfully!");
-        return true;
-      }
+      System.out.println(studentEnrolment);
     }
-    return false;
+    return true;
   }
 
 
@@ -92,7 +107,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     // TODO: display courses
     Scanner sc = new Scanner(System.in);
     System.out.print("""
-      Please enter a number if you would like to delete or add new courses
+      Please enter 1 to delete a course or 2 to add a course
       1. Delete
       2. Add
     >>>>>\s"""
@@ -128,6 +143,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     StudentEnrolment enrolment = getOne(sId, cId, semester);
     // check if enrolment info exists
     if (enrolment == null) {
+      System.out.println("Cannot find the enrolment you're looking for.");
       System.out.println("Delete unsuccessful!");
       return false;
     }
@@ -157,7 +173,6 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         return enrolment;
       }
     }
-    System.out.println("Cannot find the enrolment you're looking for.");
     return null;
   }
 
