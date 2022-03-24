@@ -1,5 +1,6 @@
 package vn.com.doanyennhi.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import vn.com.doanyennhi.models.interfaces.StudentEnrolmentManager;
@@ -104,7 +105,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    */
   @Override
   public boolean update(String sId, String semester) {
-    // TODO: display courses
+    // TODO: move all interaction code to Main
     Scanner sc = new Scanner(System.in);
     System.out.print("""
       Please enter 1 to delete a course or 2 to add a course
@@ -189,5 +190,32 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     }
     return studentEnrolments;
   }
+
+
+  public List<Student> getStudentsInCourse(String cId, String semester) {
+    List<Student> students = new ArrayList<Student>();
+
+    for (StudentEnrolment enrolment: studentEnrolments) {
+      if (enrolment.getCourse().getcId().equals(cId)
+          && enrolment.getSemester().equals(semester))
+      {
+        students.add(enrolment.getStudent());
+      }
+    }
+    return students;
+  }
+
+  public List<Course> getCoursesOfStudent(String sId, String semester) {
+    List<Course> courses = new ArrayList<Course>();
+
+    for (StudentEnrolment enrolment : studentEnrolments) {
+      if (enrolment.getStudent().getsId().equals(sId)
+          && enrolment.getSemester().equals(semester)) {
+        courses.add(enrolment.getCourse());
+      }
+    }
+    return courses;
+  }
+
 
 }
