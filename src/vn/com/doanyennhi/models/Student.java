@@ -2,7 +2,11 @@ package vn.com.doanyennhi.models;
 
 import java.util.Objects;
 
+
+// implement Comparable
+// override compareTo
 public class Student {
+
   private String sId;
   private String name;
   private String birthdate;
@@ -25,22 +29,4 @@ public class Student {
         ", birthdate='" + birthdate + "'\n";
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Student student = (Student) o;
-    // two Students are the same if they have same ID
-    return Objects.equals(sId, student.sId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(sId, name, birthdate);
-  }
 }
-

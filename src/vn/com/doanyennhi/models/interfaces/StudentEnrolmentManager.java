@@ -9,7 +9,7 @@ import vn.com.doanyennhi.models.StudentEnrolment;
 public interface StudentEnrolmentManager {
   boolean add(String sId, String cId, String semester);
 
-  boolean update(String sId, String semester);
+  boolean update(String sId, String cId, String semester, String option);
 
   boolean delete(String sId, String cId, String semester);
 

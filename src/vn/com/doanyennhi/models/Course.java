@@ -20,27 +20,10 @@ public class Course {
   @Override
   public String toString() {
     return "Course: " +
-        "cId='" + cId + '\'' +
-        ", name='" + name + '\'' +
-        ", credits=" + credits +
+        "cId = '" + cId + '\'' +
+        ", name = '" + name + '\'' +
+        ", credits = " + credits +
         "\n";
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Course course = (Course) o;
-    // two Courses are the same if they have same ID
-    return Objects.equals(cId, course.cId);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(cId, name, credits);
-  }
 }

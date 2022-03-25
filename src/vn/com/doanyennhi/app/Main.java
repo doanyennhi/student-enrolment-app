@@ -1,23 +1,19 @@
 package vn.com.doanyennhi.app;
 
-import java.util.List;
 import java.util.Scanner;
 import jdk.swing.interop.SwingInterOpUtils;
-import vn.com.doanyennhi.models.Course;
 import vn.com.doanyennhi.models.Student;
-import vn.com.doanyennhi.models.StudentEnrolment;
 import vn.com.doanyennhi.models.StudentEnrolmentManagerImpl;
-import vn.com.doanyennhi.models.interfaces.StudentEnrolmentManager;
 
 public class Main {
 
   public static void main(String[] args) {
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl("csv/default.csv");
-    List<StudentEnrolment> enrolments = manager.getAll();
     Scanner sc = new Scanner(System.in);
 
     // print system's header and menu
     System.out.println("""
+        
         ------------------------------------------------
         Welcome to STUDENT ENROLMENT MANAGEMENT SYSTEM!
         ------------------------------------------------
@@ -32,65 +28,67 @@ public class Main {
       5. View all courses offered in 1 semester
       6. Quit
       
-      Please enter a number (1-7) to choose an option:\s"""
+      Please enter a number (1-6) to choose an option:\s"""
     );
 
+    // TODO: add validation for option input
     String option = sc.nextLine();
-    System.out.println("Please enter the semester: ");
+    System.out.println("------------------------------------------------");
+    System.out.println();
+
+    System.out.print("Please enter the semester: ");
     String sem = sc.nextLine();
+    while (!manager.hasSemester(sem)) {
+      System.out.print("Please enter again: ");
+      sem = sc.nextLine();
+    }
+
 
     if (option.equals("1") || option.equals("2") || option.equals("3")) {
-      System.out.println("Please enter the student ID: ");
+      System.out.print("Please enter the student ID: ");
       String sID = sc.nextLine();
+
+      while (manager.findStudent(sID) == null) {
+        System.out.print("Please enter again: ");
+        sID = sc.nextLine();
+      }
 
       if (option.equals("1")) {
         System.out.println("Please enter the course ID you want to enrol: ");
         String cID = sc.nextLine();
+        while (manager.findCourse(cID) == null) {
+          System.out.print("Please enter again: ");
+          cID = sc.nextLine();
+        }
         manager.add(sID, cID, sem);
+
+      } else if (option.equals("2")) {
+        System.out.println(manager.getCoursesOfStudent(sID, sem));
+        System.out.print("""
+              Please enter 1 to delete a course or 2 to add a course
+              1. Delete
+              2. Add
+            >>>>>\s"""
+        );
+
+        String input = sc.nextLine();
+        // keep asking for user input until they enter one of the valid options
+        while (!input.equals("1") && !input.equals("2")) {
+          System.out.print("Please enter a valid option: ");
+          input = sc.nextLine();
+        }
+
+        System.out.println("Please enter the course ID: ");
+        String cID = sc.nextLine();
+        while (manager.findCourse(cID) == null) {
+          System.out.print("Please enter again: ");
+          cID = sc.nextLine();
+        }
+        manager.update(sID, cID, sem, input);
+      } else {
+        System.out.println(manager.getCoursesOfStudent(sID, sem));
       }
     }
-
-    if (option.equals("6")) {
-      System.out.println(manager.getAll());
-    }
-
-//    System.out.println("Course ID: ");
-//     String cID = sc.nextLine();
-
-    // Print all courses for 1 student in one sem
-//    for (StudentEnrolment enrolment: enrolments) {
-//      if (enrolment.getStudent().equals(manager.findStudent(sID))
-//          && enrolment.getSemester().equals(sem)) {
-//        System.out.println(enrolment.getCourse());
-//      }
-//    }
-
-    // Print all students of 1 course in 1 sem
-//    for (StudentEnrolment enrolment: enrolments) {
-//      if (enrolment.getCourse().equals(manager.findCourse(cID))
-//          && enrolment.getSemester().equals(sem)) {
-//        System.out.println(enrolment.getStudent());
-//      }
-//    }
-
-    // Print all courses for one sem
-    // TODO: decide if I want to put these functions in Main or SEMImpl
-    for (StudentEnrolment enrolment: enrolments) {
-      if (enrolment.getSemester().equals(sem)) {
-        System.out.println(enrolment.getCourse());
-      }
-    }
-
-    //System.out.println(enrolments);
-
-//    Student student = manager.findStudent(sId);
-//    Course course = findCourse(cId);
-//    String semester = findSemester(sem);
-//    if (student  == null | course == null | semester == null) {
-//      // cannot enrol as info provided cannot be found
-//      return false;
-//    }
-
 
   }
 

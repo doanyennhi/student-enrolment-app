@@ -30,7 +30,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         return enrolment.getStudent();
       }
     }
-    System.out.println("This student does not exist in the system.");
+    System.out.println("This student does not exist.");
     return null;
   }
 
@@ -46,7 +46,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         return enrolment.getCourse();
       }
     }
-    System.out.println("This course is not offered in the system.");
+    System.out.println("This course does not exist.");
     return null;
   }
 
@@ -62,7 +62,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         return true;
       }
     }
-    System.out.println("This semester does not exist in the database.");
+    System.out.println("This semester does not exist.");
     return false;
   }
 
@@ -90,9 +90,9 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     studentEnrolments.add(new StudentEnrolment(student, course, semester));
     System.out.println("Enrol successfully!");
     // for testing
-//    for (StudentEnrolment studentEnrolment: studentEnrolments) {
-//      System.out.println(studentEnrolment);
-//    }
+    for (StudentEnrolment studentEnrolment: studentEnrolments) {
+      System.out.println(studentEnrolment);
+    }
     return true;
   }
 
@@ -104,27 +104,9 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    * @return true if enrolment is updated successfully, false otherwise
    */
   @Override
-  public boolean update(String sId, String semester) {
-    // TODO: move all interaction code to Main
-    Scanner sc = new Scanner(System.in);
-    System.out.print("""
-      Please enter 1 to delete a course or 2 to add a course
-      1. Delete
-      2. Add
-    >>>>>\s"""
-    );
-
-    String input = sc.nextLine();
-    // keep asking for user input until they enter one of the valid options
-    while (!input.equals("1") && !input.equals("2")) {
-      System.out.print("Please enter a valid option: ");
-      input = sc.nextLine();
-    }
-
+  public boolean update(String sId, String cId, String semester, String option) {
     // delete or add the specified course based on user's choice
-    System.out.print("Please enter the course ID: ");
-    String cId = sc.nextLine();
-    if (input.equals("1")) {
+    if (option.equals("1")) {
       return delete(sId, cId, semester);
     } else {
       return add(sId, cId, semester);
@@ -148,12 +130,13 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
       System.out.println("Delete unsuccessful!");
       return false;
     }
+
     studentEnrolments.remove(enrolment);
     System.out.println("The enrolment has been deleted.");
     // FOR TESTING
-//    for (StudentEnrolment studentEnrolment: studentEnrolments) {
-//      System.out.println(studentEnrolment);
-//    }
+    for (StudentEnrolment studentEnrolment: studentEnrolments) {
+      System.out.println(studentEnrolment);
+    }
     return true;
   }
 
@@ -217,5 +200,16 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     return courses;
   }
 
+
+  public List<Course> getCoursesInSem(String sem) {
+    List<Course> courses = new ArrayList<Course>();
+
+    for (StudentEnrolment enrolment: studentEnrolments) {
+      if (enrolment.getSemester().equals(sem)) {
+        courses.add(enrolment.getCourse());
+      }
+    }
+    return courses;
+  }
 
 }
