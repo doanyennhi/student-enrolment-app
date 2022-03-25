@@ -79,7 +79,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     // prevent enrolment if student has already enrolled in the provided course and semester
     StudentEnrolment enrolment = getOne(sId, cId, semester);
     if (enrolment != null) {
-      System.out.printf("Student %s already enrolled in course %s for semester %s\n",
+      System.out.printf("Cannot add as student %s already enrolled in course %s for semester %s\n",
           sId, cId, semester);
       return false;
     }
@@ -99,8 +99,10 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
   /**
    * Method to update enrolment of a student in 1 semester by deleting or adding new courses
-   * @param sId student ID of student we want to update the enrolment for
-   * @param semester of the enrolment
+   * @param sId ID of student we want to update the enrolment for
+   * @param cId ID of course we want to add/ delete
+   * @param semester of enrolment
+   * @param option to delete or add course
    * @return true if enrolment is updated successfully, false otherwise
    */
   @Override
@@ -162,7 +164,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
 
   /**
-   * Method to get all enrolment in system
+   * Method to get all enrolments in system
    * @return list of student enrolment if it's not empty, null otherwise
    */
   @Override
@@ -175,6 +177,12 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   }
 
 
+  /**
+   * Get all students enrolled in 1 course in 1 semester
+   * @param cId ID of course
+   * @param semester of enrolment
+   * @return list of students enrolled in 1 course in 1 semester if it's not empty, null otherwise
+   */
   public List<Student> getStudentsInCourse(String cId, String semester) {
     List<Student> students = new ArrayList<Student>();
 
@@ -185,9 +193,20 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         students.add(enrolment.getStudent());
       }
     }
+    if (students.isEmpty()) {
+      System.out.printf("Course %s in semester %s doesn't have any students.\n", cId, semester);
+      return null;
+    }
     return students;
   }
 
+
+  /**
+   * Get all courses of a student in 1 semester
+   * @param sId ID of student
+   * @param semester of enrolment
+   * @return list of courses of a student in 1 semester if it's not empty, null otherwise
+   */
   public List<Course> getCoursesOfStudent(String sId, String semester) {
     List<Course> courses = new ArrayList<Course>();
 
@@ -197,10 +216,19 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
         courses.add(enrolment.getCourse());
       }
     }
+    if (courses.isEmpty()) {
+      System.out.printf("Student %s has no courses in semester %s.\n", sId, semester);
+      return null;
+    }
     return courses;
   }
 
 
+  /**
+   * Get all courses in a semester
+   * @param sem semester we want to view
+   * @return list of courses in 1 semester
+   */
   public List<Course> getCoursesInSem(String sem) {
     List<Course> courses = new ArrayList<Course>();
 
