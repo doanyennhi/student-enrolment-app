@@ -1,7 +1,5 @@
 package vn.com.doanyennhi.models;
 
-import java.util.Objects;
-
 public class Course {
   private String cId;
   private String name;
@@ -13,7 +11,7 @@ public class Course {
     this.credits = credits;
   }
 
-  String getcId() {
+  String getCId() {
     return cId;
   }
 

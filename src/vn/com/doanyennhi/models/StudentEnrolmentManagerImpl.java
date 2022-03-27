@@ -1,8 +1,9 @@
 package vn.com.doanyennhi.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Set;
 import vn.com.doanyennhi.models.interfaces.StudentEnrolmentManager;
 import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
 
@@ -26,7 +27,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    */
   public Student findStudent(String studentId) {
     for (StudentEnrolment enrolment: studentEnrolments) {
-      if (enrolment.getStudent().getsId().equals(studentId)) {
+      if (enrolment.getStudent().getSId().equals(studentId)) {
         return enrolment.getStudent();
       }
     }
@@ -42,7 +43,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    */
   public Course findCourse(String courseId) {
     for (StudentEnrolment enrolment: studentEnrolments) {
-      if (enrolment.getCourse().getcId().equals(courseId)) {
+      if (enrolment.getCourse().getCId().equals(courseId)) {
         return enrolment.getCourse();
       }
     }
@@ -153,8 +154,8 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   @Override
   public StudentEnrolment getOne(String sId, String cId, String semester) {
     for (StudentEnrolment enrolment : studentEnrolments) {
-      if (enrolment.getStudent().getsId().equals(sId)
-          && enrolment.getCourse().getcId().equals(cId)
+      if (enrolment.getStudent().getSId().equals(sId)
+          && enrolment.getCourse().getCId().equals(cId)
           && enrolment.getSemester().equals(semester)) {
         return enrolment;
       }
@@ -187,7 +188,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     List<Student> students = new ArrayList<Student>();
 
     for (StudentEnrolment enrolment: studentEnrolments) {
-      if (enrolment.getCourse().getcId().equals(cId)
+      if (enrolment.getCourse().getCId().equals(cId)
           && enrolment.getSemester().equals(semester))
       {
         students.add(enrolment.getStudent());
@@ -211,7 +212,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     List<Course> courses = new ArrayList<Course>();
 
     for (StudentEnrolment enrolment : studentEnrolments) {
-      if (enrolment.getStudent().getsId().equals(sId)
+      if (enrolment.getStudent().getSId().equals(sId)
           && enrolment.getSemester().equals(semester)) {
         courses.add(enrolment.getCourse());
       }
@@ -229,13 +230,18 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    * @param sem semester we want to view
    * @return list of courses in 1 semester
    */
-  public List<Course> getCoursesInSem(String sem) {
-    List<Course> courses = new ArrayList<Course>();
+  public Set<Course> getCoursesInSem(String sem) {
+    Set<String> courseIDs = new HashSet<String>();
+    Set<Course> courses = new HashSet<Course>();
 
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getSemester().equals(sem)) {
-        courses.add(enrolment.getCourse());
+        courseIDs.add(enrolment.getCourse().getCId());
       }
+    }
+
+    for (String courseID: courseIDs) {
+      courses.add(findCourse(courseID));
     }
     return courses;
   }

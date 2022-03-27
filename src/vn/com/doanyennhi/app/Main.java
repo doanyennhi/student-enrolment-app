@@ -2,12 +2,19 @@ package vn.com.doanyennhi.app;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import vn.com.doanyennhi.models.Course;
 import vn.com.doanyennhi.models.Student;
 import vn.com.doanyennhi.models.StudentEnrolmentManagerImpl;
 
 public class Main {
 
+  /**
+   * Keep asking user for a semester until the semester entered exists in the system
+   * @param sc scanner to get user input
+   * @param manager the student enrolment management program
+   * @return the valid semester
+   */
   public static String getValidSemester(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the semester: ");
     String sem = sc.nextLine();
@@ -21,6 +28,13 @@ public class Main {
     return sem;
   }
 
+
+  /**
+   * Keep asking user for a student ID until the ID entered exists in the system
+   * @param sc scanner to get user input
+   * @param manager the student enrolment management program
+   * @return valid student ID
+   */
   public static String getValidStudentId(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the student ID: ");
     String sID = sc.nextLine();
@@ -34,6 +48,13 @@ public class Main {
     return sID;
   }
 
+
+  /**
+   * Keep asking user for a course ID until the ID entered exists in the system
+   * @param sc scanner to get user input
+   * @param manager the student enrolment management program
+   * @return valid course ID
+   */
   public static String getValidCourseId(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the course ID: ");
     String cID = sc.nextLine();
@@ -47,6 +68,8 @@ public class Main {
     return cID;
   }
 
+
+  // TODO: add comments, add prompt user if they want to continue, uppercase user input
   public static void main(String[] args) {
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl("csv/default.csv");
     Scanner sc = new Scanner(System.in);
@@ -100,11 +123,13 @@ public class Main {
         String sID = getValidStudentId(sc, manager);
         List<Course> coursesOfStudent = manager.getCoursesOfStudent(sID, sem);
         if (coursesOfStudent != null) {
+          System.out.printf("Here is the list of courses for student %s in semester %s: \n", sID, sem);
           coursesOfStudent.forEach(course -> System.out.print(course));
         }
 
         System.out.print("""
-                Please enter 1 to delete a course or 2 to add a course
+              
+              Please enter 1 to delete a course or 2 to add a course
                 1. Delete
                 2. Add
               >>>>>\s"""
@@ -124,6 +149,7 @@ public class Main {
         String sID = getValidStudentId(sc, manager);
         List<Course> coursesOfStudent = manager.getCoursesOfStudent(sID, sem);
         if (coursesOfStudent != null) {
+          System.out.printf("Courses of student %s in semester %s: \n", sID, sem);
           coursesOfStudent.forEach(course -> System.out.print(course));
         }
 
@@ -131,11 +157,14 @@ public class Main {
         String cID = getValidCourseId(sc, manager);
         List<Student> studentsInCourse = manager.getStudentsInCourse(cID, sem);
         if (studentsInCourse != null) {
+          System.out.printf("Students enrolled in course %s in semester %s: \n", cID, sem);
           studentsInCourse.forEach(student -> System.out.print(student));
         }
 
       } else {
-
+        Set<Course> coursesInSem = manager.getCoursesInSem(sem);
+        System.out.printf("Courses offered in semester %s: \n", sem);
+        coursesInSem.forEach(course -> System.out.println(course));
       }
     }
   }

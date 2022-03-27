@@ -1,7 +1,5 @@
 package vn.com.doanyennhi.models;
 
-import java.util.Objects;
-
 
 // implement Comparable
 // override compareTo
@@ -17,7 +15,7 @@ public class Student {
     this.birthdate = birthdate;
   }
 
-  String getsId() {
+  String getSId() {
     return sId;
   }
 
