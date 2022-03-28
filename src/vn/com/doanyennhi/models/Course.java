@@ -11,8 +11,16 @@ public class Course {
     this.credits = credits;
   }
 
-  String getCId() {
+  public String getCId() {
     return cId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getCredits() {
+    return credits;
   }
 
   @Override

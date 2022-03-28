@@ -1,5 +1,7 @@
 package vn.com.doanyennhi.app;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -9,7 +11,7 @@ import vn.com.doanyennhi.models.StudentEnrolment;
 import vn.com.doanyennhi.models.StudentEnrolmentManagerImpl;
 import vn.com.doanyennhi.models.interfaces.Csv;
 import vn.com.doanyennhi.processing.CsvImpl;
-import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
+import vn.com.doanyennhi.processing.DataProcessor;
 
 
 /**
@@ -87,14 +89,30 @@ public class Main {
 
 
   public static void main(String[] args) {
-    // read data from CSV file, process data into StudentEnrolment objects
+    Scanner sc = new Scanner(System.in);
+    List<String[]> dataList = new ArrayList<String[]>();
+
+    // asks for csv file path or use default
     Csv csv = new CsvImpl();
-    List<String[]> dataList = csv.readCsv("csv/default.csv");
-    EnrolmentDataProcessor processor = new EnrolmentDataProcessor();
-    List<StudentEnrolment> enrolmentList = processor.processEnrolmentData(dataList);
+    System.out.print("Please enter a CSV file path (type 'default' to use the default file): ");
+    String path = sc.nextLine();
+    if (path.equals("default")) {
+      path = "csv/default.csv";
+    }
+
+    // try to read data from CSV file
+    try {
+      dataList = csv.readCsv(path);
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+      System.exit(0);     // close system if there is problem with file path
+    }
+
+    // process data into StudentEnrolment objects
+    DataProcessor processor = new DataProcessor();
+    List<StudentEnrolment> enrolmentList = processor.convertToEnrolmentData(dataList);
 
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
-    Scanner sc = new Scanner(System.in);
 
     // print system's header and menu
     System.out.println("""

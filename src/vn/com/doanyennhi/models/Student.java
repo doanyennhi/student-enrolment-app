@@ -12,8 +12,16 @@ public class Student {
     this.birthdate = birthdate;
   }
 
-  String getSId() {
+  public String getSId() {
     return sId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getBirthdate() {
+    return birthdate;
   }
 
   @Override

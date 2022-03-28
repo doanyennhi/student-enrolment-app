@@ -16,11 +16,11 @@ public class CsvImpl implements Csv {
    * method to read data from provided CSV file
    * @param path of CSV file we want to read
    * @return list of string arrays containing the data of each line in the file
+   * @throws IOException exception related to file path
    */
-  public List<String[]> readCsv(String path) {
+  public List<String[]> readCsv(String path) throws IOException {
     List<String[]> dataList = new ArrayList<String[]>();
 
-    try {
       Scanner sc = new Scanner(new File(path));
 
       while (sc.hasNextLine()) {
@@ -28,9 +28,6 @@ public class CsvImpl implements Csv {
         // each string array in dataList now contains data of each line in csv file
         dataList.add(sc.nextLine().split(","));
       }
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-    }
     return dataList;
   }
 
