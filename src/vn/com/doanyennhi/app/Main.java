@@ -11,6 +11,16 @@ import vn.com.doanyennhi.models.interfaces.Csv;
 import vn.com.doanyennhi.processing.CsvImpl;
 import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
 
+
+/**
+ * This is a Java console app that can be used to manage student enrolment for a school.
+ * It can perform various enrolment-related functionalities, such as enrolling a student
+ * in a course or update an enrolment.
+ * @author Doan Yen Nhi (s3880599)
+ * Course: Further Programming (COSC2440)
+ * Instructor: Minh Thanh Vu
+ * RMIT University Vietnam - Semester 1, 2022
+ */
 public class Main {
 
   /**
@@ -21,12 +31,13 @@ public class Main {
    */
   public static String getValidSemester(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the semester: ");
-    String sem = sc.nextLine();
+    String sem = sc.nextLine().toUpperCase();
     System.out.println();
 
+    // user has to enter semester again until the semester entered is found in the database
     while (!manager.hasSemester(sem)) {
       System.out.print("Please enter again: ");
-      sem = sc.nextLine();
+      sem = sc.nextLine().toUpperCase();
       System.out.println();
     }
     return sem;
@@ -41,12 +52,13 @@ public class Main {
    */
   public static String getValidStudentId(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the student ID: ");
-    String sID = sc.nextLine();
+    String sID = sc.nextLine().toUpperCase();
     System.out.println();
 
+    // user has to enter student ID again until the ID entered is found in the database
     while (manager.findStudent(sID) == null) {
       System.out.print("Please enter again: ");
-      sID = sc.nextLine();
+      sID = sc.nextLine().toUpperCase();
       System.out.println();
     }
     return sID;
@@ -61,25 +73,26 @@ public class Main {
    */
   public static String getValidCourseId(Scanner sc, StudentEnrolmentManagerImpl manager) {
     System.out.print("Please enter the course ID: ");
-    String cID = sc.nextLine();
+    String cID = sc.nextLine().toUpperCase();
     System.out.println();
 
+    // user has to enter course ID again until the ID entered is found in the database
     while (manager.findCourse(cID) == null) {
       System.out.print("Please enter again: ");
-      cID = sc.nextLine();
+      cID = sc.nextLine().toUpperCase();
       System.out.println();
     }
     return cID;
   }
 
 
-  // TODO: add comments, add prompt user if they want to continue, uppercase user input
   public static void main(String[] args) {
+    // read data from CSV file, process data into StudentEnrolment objects
     Csv csv = new CsvImpl();
     List<String[]> dataList = csv.readCsv("csv/default.csv");
-
     EnrolmentDataProcessor processor = new EnrolmentDataProcessor();
     List<StudentEnrolment> enrolmentList = processor.processEnrolmentData(dataList);
+
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
     Scanner sc = new Scanner(System.in);
 
@@ -118,7 +131,7 @@ public class Main {
       }
 
       if (option.equals("6")) {
-        break;
+        break;      // exit system
       }
 
       String sem = getValidSemester(sc, manager);
@@ -131,6 +144,7 @@ public class Main {
       } else if (option.equals("2")) {
         String sID = getValidStudentId(sc, manager);
         List<Course> coursesOfStudent = manager.getCoursesOfStudent(sID, sem);
+        // display the list of courses for a student in a semester if it's not empty
         if (coursesOfStudent != null) {
           System.out.printf("Here is the list of courses for student %s in semester %s: \n", sID, sem);
           coursesOfStudent.forEach(course -> System.out.print(course));
@@ -165,6 +179,7 @@ public class Main {
       } else if (option.equals("4")) {
         String cID = getValidCourseId(sc, manager);
         List<Student> studentsInCourse = manager.getStudentsInCourse(cID, sem);
+        // display list of students for a course in a semester if it's not empty
         if (studentsInCourse != null) {
           System.out.printf("Students enrolled in course %s in semester %s: \n", cID, sem);
           studentsInCourse.forEach(student -> System.out.print(student));
@@ -174,6 +189,24 @@ public class Main {
         Set<Course> coursesInSem = manager.getCoursesInSem(sem);
         System.out.printf("Courses offered in semester %s: \n", sem);
         coursesInSem.forEach(course -> System.out.println(course));
+      }
+
+      // allows user to continue the program or exit
+      System.out.print("\nWould you like to continue (y/n): ");
+      String input = sc.nextLine().toLowerCase();
+
+      // keep asking for user input until user enters valid answer
+      while (!input.equals("y")
+          && !input.equals("n")
+          && !input.equals("yes")
+          && !input.equals("no"))
+      {
+        System.out.print("Please enter either yes/no or y/n: ");
+        input = sc.nextLine().toLowerCase();
+      }
+
+      if (input.equals("n") || input.equals("no")) {
+        break;
       }
     }
   }
