@@ -10,6 +10,6 @@ public interface Csv {
 
   List<String[]> readCsv(String path) throws IOException;
 
-  void writeCsv();
+  void writeCsv(String path, List<String[]> enrolmentDataList) throws IOException;
 
 }

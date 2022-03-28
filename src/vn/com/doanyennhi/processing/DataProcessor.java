@@ -8,8 +8,9 @@ import vn.com.doanyennhi.models.StudentEnrolment;
 
 /**
  *  <b> DataProcessor </b> class is used to process the data we got
- *  from CSV file and convert our data to CSV file.
+ *  from CSV file and convert our data to a format that can be written to CSV file.
  */
+// TODO: turn to abstract class, convertToCsv also abstract
 public class DataProcessor {
 
   /**
@@ -17,7 +18,7 @@ public class DataProcessor {
    * @param enrolmentsData list of enrolment data in string format
    * @return list of all enrolments as StudentEnrolment objects
    */
-  public List<StudentEnrolment> convertToEnrolmentData(List<String[]> enrolmentsData) {
+  public List<StudentEnrolment> convertCsvToEnrolment(List<String[]> enrolmentsData) {
     List<StudentEnrolment> studentEnrolmentList = new ArrayList<StudentEnrolment>();
 
     for (String[] enrolment: enrolmentsData) {

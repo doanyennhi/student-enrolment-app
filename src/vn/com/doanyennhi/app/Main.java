@@ -15,13 +15,14 @@ import vn.com.doanyennhi.processing.DataProcessor;
 
 
 /**
- * This is a Java console app that can be used to manage student enrolment for a school.
- * It can perform various enrolment-related functionalities, such as enrolling a student
- * in a course or update an enrolment.
  * @author Doan Yen Nhi (s3880599)
  * Course: Further Programming (COSC2440)
  * Instructor: Minh Thanh Vu
  * RMIT University Vietnam - Semester 1, 2022
+ *
+ * This is a Java console app that can be used to manage student enrolment for a school.
+ * It can perform various enrolment-related functionalities, such as enrolling a student
+ * in a course or update an enrolment.
  */
 public class Main {
 
@@ -87,6 +88,15 @@ public class Main {
     return cID;
   }
 
+  // TODO: implement
+  public static void saveToCsv() {
+    System.out.println("Would you like to save this to a CSV file (yes/no): ");
+//    String isSaving = sc.nextLine();
+//    if (isSaving.equals("yes")) {
+//      csv.writeCsv("students_" + cID + "_" + sem + ".csv", processor.convertToCsvData());
+//    }
+  }
+
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
@@ -110,7 +120,7 @@ public class Main {
 
     // process data into StudentEnrolment objects
     DataProcessor processor = new DataProcessor();
-    List<StudentEnrolment> enrolmentList = processor.convertToEnrolmentData(dataList);
+    List<StudentEnrolment> enrolmentList = processor.convertCsvToEnrolment(dataList);
 
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
 

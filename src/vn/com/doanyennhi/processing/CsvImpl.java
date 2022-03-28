@@ -2,6 +2,7 @@ package vn.com.doanyennhi.processing;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,7 +32,22 @@ public class CsvImpl implements Csv {
     return dataList;
   }
 
-  public void writeCsv() {
+  public void writeCsv(String path, List<String[]> enrolmentDataList) throws IOException {
+    PrintWriter writer = new PrintWriter(path);
 
+    // convert from array of strings to one string of data separated by comma
+    for (String[] enrolment: enrolmentDataList) {
+      StringBuilder line = new StringBuilder();
+
+      for (int i = 0; i < enrolment.length; i++) {
+        if (i == enrolment.length - 1) {
+          line.append(enrolment[i]).append("\n");
+        }
+        line.append(enrolment[i]).append(",");
+      }
+      writer.write(line.toString());  // write each line of data string to CSV file
+    }
+    writer.close();
+    System.out.printf("Report has been saved successfully to %s!", path);
   }
 }
