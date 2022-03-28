@@ -1,8 +1,5 @@
 package vn.com.doanyennhi.models;
 
-
-// implement Comparable
-// override compareTo
 public class Student {
 
   private String sId;

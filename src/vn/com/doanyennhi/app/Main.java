@@ -5,7 +5,11 @@ import java.util.Scanner;
 import java.util.Set;
 import vn.com.doanyennhi.models.Course;
 import vn.com.doanyennhi.models.Student;
+import vn.com.doanyennhi.models.StudentEnrolment;
 import vn.com.doanyennhi.models.StudentEnrolmentManagerImpl;
+import vn.com.doanyennhi.models.interfaces.Csv;
+import vn.com.doanyennhi.processing.CsvImpl;
+import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
 
 public class Main {
 
@@ -71,7 +75,12 @@ public class Main {
 
   // TODO: add comments, add prompt user if they want to continue, uppercase user input
   public static void main(String[] args) {
-    StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl("csv/default.csv");
+    Csv csv = new CsvImpl();
+    List<String[]> dataList = csv.readCsv("csv/default.csv");
+
+    EnrolmentDataProcessor processor = new EnrolmentDataProcessor();
+    List<StudentEnrolment> enrolmentList = processor.processEnrolmentData(dataList);
+    StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
     Scanner sc = new Scanner(System.in);
 
     // print system's header and menu

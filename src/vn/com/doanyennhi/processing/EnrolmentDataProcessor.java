@@ -14,11 +14,10 @@ public class EnrolmentDataProcessor {
 
   /**
    * Get data from reading CSV file. Process and convert data into a StudentEnrolment object
-   * @param path of CSV file we want to read
-   * @return list of all enrolments
+   * @param enrolmentsData list of enrolment data in string format
+   * @return list of all enrolments as StudentEnrolment objects
    */
-  public static List<StudentEnrolment> processEnrolmentData(String path) {
-    List<String[]> enrolmentsData = Csv.readCsv(path);
+  public List<StudentEnrolment> processEnrolmentData(List<String[]> enrolmentsData) {
     List<StudentEnrolment> studentEnrolmentList = new ArrayList<StudentEnrolment>();
 
     for (String[] enrolment: enrolmentsData) {

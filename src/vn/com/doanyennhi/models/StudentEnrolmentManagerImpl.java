@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import vn.com.doanyennhi.models.interfaces.StudentEnrolmentManager;
-import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
 
 /**
  * <b> StudentEnrolmentManagerImpl </b> is used to manage and implement
@@ -14,9 +13,9 @@ import vn.com.doanyennhi.processing.EnrolmentDataProcessor;
 public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   private List<StudentEnrolment> studentEnrolments;
 
-  public StudentEnrolmentManagerImpl(String path) {
-    // retrieve enrolment data and populate to enrolments list
-    this.studentEnrolments = EnrolmentDataProcessor.processEnrolmentData(path);
+  public StudentEnrolmentManagerImpl(List<StudentEnrolment> studentEnrolments) {
+    // populate processed enrolment data to enrolments list
+    this.studentEnrolments = studentEnrolments;
   }
 
 

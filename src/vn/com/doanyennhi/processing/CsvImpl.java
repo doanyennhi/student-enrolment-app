@@ -5,18 +5,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import vn.com.doanyennhi.models.interfaces.Csv;
 
 /**
- * <b> Csv </b> class is used to perform operations with CSV files.
+ * <b> CsvImpl </b> class is used to implement operations with CSV files.
  */
-public class Csv {
+public class CsvImpl implements Csv {
 
   /**
    * method to read data from provided CSV file
    * @param path of CSV file we want to read
    * @return list of string arrays containing the data of each line in the file
    */
-  public static List<String[]> readCsv(String path) {
+  public List<String[]> readCsv(String path) {
     List<String[]> dataList = new ArrayList<String[]>();
 
     try {
@@ -33,7 +34,7 @@ public class Csv {
     return dataList;
   }
 
-  public static void writeCsv() {
+  public void writeCsv() {
 
   }
 }
