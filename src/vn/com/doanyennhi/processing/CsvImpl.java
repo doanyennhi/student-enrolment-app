@@ -32,18 +32,19 @@ public class CsvImpl implements Csv {
     return dataList;
   }
 
-  public void writeCsv(String path, List<String[]> enrolmentDataList) throws IOException {
+  public void writeCsv(String path, List<String[]> dataList) throws IOException {
     PrintWriter writer = new PrintWriter(path);
 
     // convert from array of strings to one string of data separated by comma
-    for (String[] enrolment: enrolmentDataList) {
+    for (String[] enrolment: dataList) {
       StringBuilder line = new StringBuilder();
 
       for (int i = 0; i < enrolment.length; i++) {
         if (i == enrolment.length - 1) {
           line.append(enrolment[i]).append("\n");
+        } else {
+          line.append(enrolment[i]).append(",");
         }
-        line.append(enrolment[i]).append(",");
       }
       writer.write(line.toString());  // write each line of data string to CSV file
     }

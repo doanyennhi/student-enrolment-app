@@ -10,7 +10,6 @@ import vn.com.doanyennhi.models.StudentEnrolment;
  *  <b> DataProcessor </b> class is used to process the data we got
  *  from CSV file and convert our data to a format that can be written to CSV file.
  */
-// TODO: turn to abstract class, convertToCsv also abstract
 public class DataProcessor {
 
   /**
@@ -34,27 +33,36 @@ public class DataProcessor {
 
 
   /**
-   * Convert StudentEnrolment objects to array of strings
-   * @param enrolments list of all StudentEnrolment objects
-   * @return list of string arrays containing enrolment data
+   * Convert Student objects to array of strings to be written to CSV file
+   * @param students list
+   * @return list of string arrays containing student data
    */
-  public List<String[]> convertToCsvData(List<StudentEnrolment> enrolments) {
+  public List<String[]> convertStudentToCsv(List<Student> students) {
     List<String[]> csvData = new ArrayList<String[]>();
 
-    // get all info of student, course and sem to store in array of string
-    for (StudentEnrolment enrolment: enrolments) {
-      Student student = enrolment.getStudent();
-      Course course = enrolment.getCourse();
-      String sem = enrolment.getSemester();
-
+    // get all info of student in array of string
+    for (Student student: students) {
       String[] dataLine = {
           student.getSId(),
           student.getName(),
           student.getBirthdate(),
+      };
+      csvData.add(dataLine);
+    }
+    return csvData;
+  }
+
+
+  // similar to function above but convert Course to array of strings
+  public List<String[]> convertCourseToCsv(List<Course> courses) {
+    List<String[]> csvData = new ArrayList<String[]>();
+
+    // get all info of course in array of string
+    for (Course course: courses) {
+      String[] dataLine = {
           course.getCId(),
           course.getName(),
           Integer.toString(course.getCredits()),
-          sem
       };
       csvData.add(dataLine);
     }

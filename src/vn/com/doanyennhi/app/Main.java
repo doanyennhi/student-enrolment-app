@@ -88,19 +88,39 @@ public class Main {
     return cID;
   }
 
-  // TODO: implement
-  public static void saveToCsv() {
-    System.out.println("Would you like to save this to a CSV file (yes/no): ");
-//    String isSaving = sc.nextLine();
-//    if (isSaving.equals("yes")) {
-//      csv.writeCsv("students_" + cID + "_" + sem + ".csv", processor.convertToCsvData());
-//    }
+  public static String getValidAnswer(Scanner sc, String msg) {
+    System.out.print(msg);
+    String input = sc.nextLine().toLowerCase();
+
+    // keep asking for user input until user enters valid yes/ no answer
+    while (!input.equals("y")
+        && !input.equals("n")
+        && !input.equals("yes")
+        && !input.equals("no"))
+    {
+      System.out.print("Please enter either yes/no or y/n: ");
+      input = sc.nextLine().toLowerCase();
+    }
+    return input;
   }
+
+//  public static void saveToCsv(String file, Csv csv, DataProcessor processor, List) {
+//      try {
+//        csv.writeCsv(file, processor.convertCourseToCsv(coursesOfStudent));
+//        System.out.println("Report is saved to file " + file);
+//      } catch (IOException e) {
+//        System.out.println(e.getMessage());
+//        System.exit(0);     // close system if there is problem with file
+//      }
+//  }
 
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     List<String[]> dataList = new ArrayList<String[]>();
+    // messages to ask users
+    String saveCsvMsg = "\nWould you like to save this to a CSV file (yes/no): ";
+    String continueMsg = "\nWould you like to continue (y/n): ";
 
     // asks for csv file path or use default
     Csv csv = new CsvImpl();
@@ -199,9 +219,22 @@ public class Main {
       } else if (option.equals("3")) {
         String sID = getValidStudentId(sc, manager);
         List<Course> coursesOfStudent = manager.getCoursesOfStudent(sID, sem);
+        // display all courses if the course list is not empty
         if (coursesOfStudent != null) {
           System.out.printf("Courses of student %s in semester %s: \n", sID, sem);
           coursesOfStudent.forEach(course -> System.out.print(course));
+
+          // asks user if they want to save report to CSV file
+          String input = getValidAnswer(sc, saveCsvMsg);
+          if (input.equals("y") || input.equals("yes")) {
+            String file = "courses_" + sID + "_" + sem + ".csv";
+            try {
+              csv.writeCsv(file, processor.convertCourseToCsv(coursesOfStudent));
+            } catch (IOException e) {
+              System.out.println(e.getMessage());
+            }
+            System.exit(0);
+          }
         }
 
       } else if (option.equals("4")) {
@@ -211,28 +244,29 @@ public class Main {
         if (studentsInCourse != null) {
           System.out.printf("Students enrolled in course %s in semester %s: \n", cID, sem);
           studentsInCourse.forEach(student -> System.out.print(student));
+
+          String input = getValidAnswer(sc, saveCsvMsg);
+          if (input.equals("y") || input.equals("yes")) {
+            String file = "students_" + cID + "_" + sem + ".csv";
+
+            try {
+              csv.writeCsv(file, processor.convertStudentToCsv(studentsInCourse));
+            } catch (IOException e) {
+              System.out.println(e.getMessage());
+            }
+            System.exit(0);
+          }
         }
 
-      } else {
+      } else {   // TODO: implement save CSV
         Set<Course> coursesInSem = manager.getCoursesInSem(sem);
         System.out.printf("Courses offered in semester %s: \n", sem);
         coursesInSem.forEach(course -> System.out.println(course));
+
       }
 
       // allows user to continue the program or exit
-      System.out.print("\nWould you like to continue (y/n): ");
-      String input = sc.nextLine().toLowerCase();
-
-      // keep asking for user input until user enters valid answer
-      while (!input.equals("y")
-          && !input.equals("n")
-          && !input.equals("yes")
-          && !input.equals("no"))
-      {
-        System.out.print("Please enter either yes/no or y/n: ");
-        input = sc.nextLine().toLowerCase();
-      }
-
+      String input = getValidAnswer(sc, continueMsg);
       if (input.equals("n") || input.equals("no")) {
         break;
       }
