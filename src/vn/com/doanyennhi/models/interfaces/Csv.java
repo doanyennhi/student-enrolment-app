@@ -8,8 +8,8 @@ import java.util.List;
  */
 public interface Csv {
 
-  List<String[]> readCsv(String path) throws IOException;
+  List<String[]> readCsv(String path);
 
-  void writeCsv(String path, List<String[]> enrolmentDataList) throws IOException;
+  void writeCsv(String path, List<String[]> enrolmentDataList);
 
 }

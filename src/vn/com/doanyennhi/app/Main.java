@@ -1,7 +1,5 @@
 package vn.com.doanyennhi.app;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import vn.com.doanyennhi.models.Course;
@@ -113,7 +111,6 @@ public class Main {
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    List<String[]> dataList = new ArrayList<String[]>();
     // messages to ask users
     String saveCsvMsg = "\nWould you like to save this to a CSV file (yes/no): ";
     String continueMsg = "\nWould you like to continue (y/n): ";
@@ -126,13 +123,8 @@ public class Main {
       path = "csv/default.csv";
     }
 
-    // try to read data from CSV file
-    try {
-      dataList = csv.readCsv(path);
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      System.exit(0);     // close system if there is problem with file path
-    }
+    // read data from CSV file
+    List<String[]> dataList = csv.readCsv(path);
 
     // process data into StudentEnrolment objects
     DataProcessor processor = new DataProcessor();
@@ -224,11 +216,7 @@ public class Main {
           String input = getValidAnswer(sc, saveCsvMsg);
           if (input.equals("y") || input.equals("yes")) {
             String file = "courses_" + sID + "_" + sem + ".csv";
-            try {
-              csv.writeCsv(file, processor.convertCourseToCsv(coursesOfStudent));
-            } catch (IOException e) {
-              System.out.println(e.getMessage());
-            }
+            csv.writeCsv(file, processor.convertCourseToCsv(coursesOfStudent));
             System.exit(0);
           }
         }
@@ -244,12 +232,7 @@ public class Main {
           String input = getValidAnswer(sc, saveCsvMsg);
           if (input.equals("y") || input.equals("yes")) {
             String file = "students_" + cID + "_" + sem + ".csv";
-
-            try {
-              csv.writeCsv(file, processor.convertStudentToCsv(studentsInCourse));
-            } catch (IOException e) {
-              System.out.println(e.getMessage());
-            }
+            csv.writeCsv(file, processor.convertStudentToCsv(studentsInCourse));
             System.exit(0);
           }
         }
@@ -262,12 +245,7 @@ public class Main {
         String input = getValidAnswer(sc, saveCsvMsg);
         if (input.equals("y") || input.equals("yes")) {
           String file = "courses_in_" + sem + ".csv";
-
-          try {
-            csv.writeCsv(file, processor.convertCourseToCsv(coursesInSem));
-          } catch (IOException e) {
-            System.out.println(e.getMessage());
-          }
+          csv.writeCsv(file, processor.convertCourseToCsv(coursesInSem));
           System.exit(0);
         }
       }

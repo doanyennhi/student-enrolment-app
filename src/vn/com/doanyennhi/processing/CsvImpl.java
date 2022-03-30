@@ -14,41 +14,55 @@ import vn.com.doanyennhi.models.interfaces.Csv;
 public class CsvImpl implements Csv {
 
   /**
-   * method to read data from provided CSV file
+   * method to read data from provided CSV file. Exit system if there is exception
    * @param path of CSV file we want to read
    * @return list of string arrays containing the data of each line in the file
-   * @throws IOException exception related to file path
    */
-  public List<String[]> readCsv(String path) throws IOException {
+  public List<String[]> readCsv(String path) {
     List<String[]> dataList = new ArrayList<String[]>();
 
+    try {
       Scanner sc = new Scanner(new File(path));
-
       while (sc.hasNextLine()) {
         // split string of data into array, add the array of data to dataList
         // each string array in dataList now contains data of each line in csv file
         dataList.add(sc.nextLine().split(","));
       }
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+      System.exit(0);     // close system if there is problem with file path
+    }
     return dataList;
   }
 
-  public void writeCsv(String path, List<String[]> dataList) throws IOException {
-    PrintWriter writer = new PrintWriter(path);
 
-    // convert from array of strings to one string of data separated by comma
-    for (String[] enrolment: dataList) {
-      StringBuilder line = new StringBuilder();
+  /**
+   * Write data to the provided path. Exit system if there's exception
+   * @param path file we want to write to
+   * @param dataList list of string arrays containing data to be written
+   */
+  public void writeCsv(String path, List<String[]> dataList) {
+    try {
+      PrintWriter writer = new PrintWriter(path);
 
-      for (int i = 0; i < enrolment.length; i++) {
-        if (i == enrolment.length - 1) {
-          line.append(enrolment[i]).append("\n");
-        } else {
-          line.append(enrolment[i]).append(",");
+      // convert from array of strings to one string of data separated by comma
+      for (String[] enrolment: dataList) {
+        StringBuilder line = new StringBuilder();
+
+        for (int i = 0; i < enrolment.length; i++) {
+          if (i == enrolment.length - 1) {
+            line.append(enrolment[i]).append("\n");
+          } else {
+            line.append(enrolment[i]).append(",");
+          }
         }
+        writer.write(line.toString());  // write each line of data string to CSV file
       }
-      writer.write(line.toString());  // write each line of data string to CSV file
+      writer.close();
+      System.out.printf("Report has been saved successfully to %s!", path);
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+      System.exit(0);     // close system if there is problem with file path
     }
-    writer.close();
-    System.out.printf("Report has been saved successfully to %s!", path);
   }
 }
