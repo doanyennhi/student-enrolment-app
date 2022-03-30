@@ -229,9 +229,9 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
    * @param sem semester we want to view
    * @return list of courses in 1 semester
    */
-  public Set<Course> getCoursesInSem(String sem) {
+  public List<Course> getCoursesInSem(String sem) {
     Set<String> courseIDs = new HashSet<String>();
-    Set<Course> courses = new HashSet<Course>();
+    List<Course> courses = new ArrayList<Course>();
 
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getSemester().equals(sem)) {

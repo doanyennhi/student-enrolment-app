@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import vn.com.doanyennhi.models.Course;
 import vn.com.doanyennhi.models.Student;
 import vn.com.doanyennhi.models.StudentEnrolment;
@@ -88,6 +87,13 @@ public class Main {
     return cID;
   }
 
+
+  /**
+   * Keep asking user for yes/ no answer until they enter a valid answer
+   * @param sc scanner to scan user input
+   * @param msg message printed to prompt user for their answer
+   * @return valid yes/ no response
+   */
   public static String getValidAnswer(Scanner sc, String msg) {
     System.out.print(msg);
     String input = sc.nextLine().toLowerCase();
@@ -103,16 +109,6 @@ public class Main {
     }
     return input;
   }
-
-//  public static void saveToCsv(String file, Csv csv, DataProcessor processor, List) {
-//      try {
-//        csv.writeCsv(file, processor.convertCourseToCsv(coursesOfStudent));
-//        System.out.println("Report is saved to file " + file);
-//      } catch (IOException e) {
-//        System.out.println(e.getMessage());
-//        System.exit(0);     // close system if there is problem with file
-//      }
-//  }
 
 
   public static void main(String[] args) {
@@ -258,11 +254,22 @@ public class Main {
           }
         }
 
-      } else {   // TODO: implement save CSV
-        Set<Course> coursesInSem = manager.getCoursesInSem(sem);
+      } else {
+        List<Course> coursesInSem = manager.getCoursesInSem(sem);
         System.out.printf("Courses offered in semester %s: \n", sem);
         coursesInSem.forEach(course -> System.out.println(course));
 
+        String input = getValidAnswer(sc, saveCsvMsg);
+        if (input.equals("y") || input.equals("yes")) {
+          String file = "courses_in_" + sem + ".csv";
+
+          try {
+            csv.writeCsv(file, processor.convertCourseToCsv(coursesInSem));
+          } catch (IOException e) {
+            System.out.println(e.getMessage());
+          }
+          System.exit(0);
+        }
       }
 
       // allows user to continue the program or exit
