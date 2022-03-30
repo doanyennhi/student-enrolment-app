@@ -89,7 +89,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     Course course = findCourse(cId);
     studentEnrolments.add(new StudentEnrolment(student, course, semester));
     System.out.println("Enrol successfully!");
-    // for testing
+    // TODO: remove when submit
     for (StudentEnrolment studentEnrolment: studentEnrolments) {
       System.out.println(studentEnrolment);
     }
@@ -135,7 +135,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
     studentEnrolments.remove(enrolment);
     System.out.println("The enrolment has been deleted.");
-    // FOR TESTING
+    // TODO: remove when submit
     for (StudentEnrolment studentEnrolment: studentEnrolments) {
       System.out.println(studentEnrolment);
     }
@@ -171,7 +171,6 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   public List<StudentEnrolment> getAll() {
     if (studentEnrolments.isEmpty()) {
       System.out.println("There is currently no enrolment.");
-      return null;
     }
     return studentEnrolments;
   }
