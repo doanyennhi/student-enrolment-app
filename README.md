@@ -1,5 +1,6 @@
 # Student enrolment console app
 <h4>A Java console app to manage student enrolment</h4>
+<p>GitHub repo: https://github.com/doanyennhi/student-enrolment-app</p>
 <hr>
 
 <h2>1. Basic classes & Interfaces</h2>
