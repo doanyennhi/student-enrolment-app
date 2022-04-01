@@ -112,8 +112,17 @@ public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     // messages to ask users
-    String saveCsvMsg = "\nWould you like to save this to a CSV file (yes/no): ";
-    String continueMsg = "\nWould you like to continue (y/n): ";
+    String saveCsvMsg = "\nWould you like to save this to a CSV file (yes/no or y/n): ";
+    String continueMsg = "\nWould you like to continue (yes/no or y/n): ";
+
+    // print system's header and menu
+    System.out.println("""
+                
+        ------------------------------------------------
+        Welcome to STUDENT ENROLMENT MANAGEMENT SYSTEM!
+        ------------------------------------------------
+        
+        """);
 
     // asks for csv file path or use default
     Csv csv = new CsvImpl();
@@ -131,15 +140,8 @@ public class Main {
     List<StudentEnrolment> enrolmentList = processor.convertCsvToEnrolment(dataList);
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
 
-    // print system's header and menu
-    System.out.println("""
-                
-        ------------------------------------------------
-        Welcome to STUDENT ENROLMENT MANAGEMENT SYSTEM!
-        ------------------------------------------------
-        """);
-
     while (true) {
+      // print out menu
       System.out.println();
       System.out.print("""
           What would you like to do?
@@ -172,6 +174,7 @@ public class Main {
       String sem = getValidSemester(sc, manager);
 
       if (option.equals("1")) {
+        // get course ID and student ID to enrol student
         String sID = getValidStudentId(sc, manager);
         String cID = getValidCourseId(sc, manager);
         manager.add(sID, cID, sem);
@@ -185,6 +188,7 @@ public class Main {
           coursesOfStudent.forEach(course -> System.out.print(course));
         }
 
+        // print update option
         System.out.print("""
               
               Please enter 1 to delete a course or 2 to add a course
@@ -223,11 +227,12 @@ public class Main {
       } else if (option.equals("4")) {
         String cID = getValidCourseId(sc, manager);
         List<Student> studentsInCourse = manager.getStudentsInCourse(cID, sem);
-        // display list of students for a course in a semester if it's not empty
+
         if (studentsInCourse != null) {
           System.out.printf("Students enrolled in course %s in semester %s: \n", cID, sem);
           studentsInCourse.forEach(student -> System.out.print(student));
 
+          // asks if they want to save report to CSV file
           String input = getValidAnswer(sc, saveCsvMsg);
           if (input.equals("y") || input.equals("yes")) {
             String file = "students_" + cID + "_" + sem + ".csv";

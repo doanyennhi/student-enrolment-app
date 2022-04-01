@@ -14,7 +14,6 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   private List<StudentEnrolment> studentEnrolments;
 
   public StudentEnrolmentManagerImpl(List<StudentEnrolment> studentEnrolments) {
-    // populate processed enrolment data to enrolments list
     this.studentEnrolments = studentEnrolments;
   }
 
@@ -89,10 +88,6 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     Course course = findCourse(cId);
     studentEnrolments.add(new StudentEnrolment(student, course, semester));
     System.out.println("Enrol successfully!");
-    // TODO: remove when submit
-    for (StudentEnrolment studentEnrolment: studentEnrolments) {
-      System.out.println(studentEnrolment);
-    }
     return true;
   }
 
@@ -137,10 +132,6 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
     studentEnrolments.remove(enrolment);
     System.out.println("The enrolment has been deleted.");
-    // TODO: remove when submit
-    for (StudentEnrolment studentEnrolment: studentEnrolments) {
-      System.out.println(studentEnrolment);
-    }
     return true;
   }
 
@@ -167,7 +158,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
   /**
    * Method to get all enrolments in system
-   * @return list of student enrolment if it's not empty, null otherwise
+   * @return list of student enrolment
    */
   @Override
   public List<StudentEnrolment> getAll() {
@@ -234,12 +225,14 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
     Set<String> courseIDs = new HashSet<String>();
     List<Course> courses = new ArrayList<Course>();
 
+    // add all course IDs in a semester to a set so there are no duplicates
     for (StudentEnrolment enrolment: studentEnrolments) {
       if (enrolment.getSemester().equals(sem)) {
         courseIDs.add(enrolment.getCourse().getCId());
       }
     }
 
+    // add courses in a semester to a list based on its ID
     for (String courseID: courseIDs) {
       courses.add(findCourse(courseID));
     }

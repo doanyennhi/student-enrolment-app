@@ -23,6 +23,7 @@ class StudentEnrolmentManagerImplTest {
   @org.junit.jupiter.api.BeforeEach
   void setUp() {
     Csv csv = new CsvImpl();
+    // use default file for testing
     List<String[]> enrolmentData = csv.readCsv("csv/default.csv");
     DataProcessor processor = new DataProcessor();
     // initial enrolment list
@@ -38,7 +39,7 @@ class StudentEnrolmentManagerImplTest {
 
   @org.junit.jupiter.api.Test
   void add() {
-    // second enrolment already existed so only 1 enrolment should be added
+    // second enrolment already existed in data so only 1 enrolment should be added
     assertTrue(manager.add("S102732", "COSC3321", "2020C"));
     assertFalse(manager.add("S103817", "COSC4030", "2020C"));
     assertEquals(initialSize + 1, manager.getAll().size());
@@ -46,7 +47,7 @@ class StudentEnrolmentManagerImplTest {
 
   @org.junit.jupiter.api.Test
   void update() {
-    // as option 1 is delete, check if size of list decrease by 1
+    // as option 1 is delete, check if size of list decreases by 1
     manager.update("S101153", "COSC3321", "2021A", "1");
     assertEquals(initialSize - 1, manager.getAll().size());
 
@@ -66,7 +67,7 @@ class StudentEnrolmentManagerImplTest {
   }
 
   @org.junit.jupiter.api.Test
-  void getOne_shouldReturnEnrolmentWithSpecifiedValueOrNull() {
+  void getOne() {
     StudentEnrolment enrolment = manager.getOne("S103723", "BUS2232", "2020B");
     assertTrue(
         enrolment.getStudent().getSId().equals("S103723")
