@@ -129,7 +129,6 @@ public class Main {
     // process data into StudentEnrolment objects
     DataProcessor processor = new DataProcessor();
     List<StudentEnrolment> enrolmentList = processor.convertCsvToEnrolment(dataList);
-
     StudentEnrolmentManagerImpl manager = new StudentEnrolmentManagerImpl(enrolmentList);
 
     // print system's header and menu
@@ -158,7 +157,7 @@ public class Main {
       System.out.println("------------------------------------------------");
       System.out.println();
 
-      // re-display the menu if user enters invalid option
+      // re-display the menu until user enters valid option
       if (!option.equals("1") && !option.equals("2") && !option.equals("3")
           && !option.equals("4") && !option.equals("5") && !option.equals("6")) {
         System.out.println("Your option is invalid. Please check the menu again.");

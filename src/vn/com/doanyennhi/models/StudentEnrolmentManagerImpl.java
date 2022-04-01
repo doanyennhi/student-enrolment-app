@@ -98,7 +98,8 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
 
 
   /**
-   * Method to update enrolment of a student in 1 semester by deleting or adding new courses
+   * Method to update enrolment of a student in 1 semester by deleting or adding new courses.
+   * Delete an enrolment if user chooses 1, add enrolment if user chooses 2
    * @param sId ID of student we want to update the enrolment for
    * @param cId ID of course we want to add/ delete
    * @param semester of enrolment
@@ -108,6 +109,7 @@ public class StudentEnrolmentManagerImpl implements StudentEnrolmentManager {
   @Override
   public boolean update(String sId, String cId, String semester, String option) {
     // delete or add the specified course based on user's choice
+    // we will assume the other option is 2 as user input will be validated in Main
     if (option.equals("1")) {
       return delete(sId, cId, semester);
     } else {
