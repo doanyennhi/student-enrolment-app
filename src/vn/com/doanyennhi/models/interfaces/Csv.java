@@ -1,6 +1,5 @@
 package vn.com.doanyennhi.models.interfaces;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
